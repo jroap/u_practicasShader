@@ -22,16 +22,17 @@ public class FoxController : MonoBehaviour
     }
     private void Update()
     {
+        CheckWantToMove();
         switch (currentState)
         {
             case FoxState.Idle:
-                SetIdleState();
+                
                 animator.SetBool("IsWalking", false); 
                 Debug.Log("Estoy en estado Idle");
                 break;
 
             case FoxState.Walking:
-                SetWalkingState();
+                
                 Debug.Log("Estoy en estado Walking");
                 float horizontalInput = Input.GetAxis("Horizontal");
                 float verticalInput = Input.GetAxis("Vertical");
@@ -53,7 +54,15 @@ public class FoxController : MonoBehaviour
         }
     }
 
-    
+    public void CheckWantToMove()
+    {
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+        if ((horizontalInput != 0) || (verticalInput != 0))
+            SetWalkingState();
+        else
+            SetIdleState();
+    }
     public void SetWalkingState()
     {
         currentState = FoxState.Walking;
